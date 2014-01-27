@@ -35,7 +35,7 @@
 			$_SESSION['SESS_FIRST_NAME'] = $member['username'];
 			session_write_close();
 			//if ($level="admin"){
-			header("location: app.php");
+			header("location: app");
 			exit();
 		}else {
 			//Login failed
