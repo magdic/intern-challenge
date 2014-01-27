@@ -52,7 +52,7 @@
         <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#results">Results</a></li>
           </ul>
@@ -91,7 +91,6 @@
         <table class="table">
           <thead>
             <tr>
-              <th>#</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Points</th>
@@ -99,14 +98,14 @@
           </thead>
           <tbody>
            
-			<?php $query = mysql_query("SELECT * FROM member ORDER BY idmember ASC") or die(mysql_error());
+			<?php $query = mysql_query("SELECT * FROM member LEFT JOIN points ON member.idmember=points.idmember ORDER BY points DESC") or die(mysql_error());
             	while ($row = mysql_fetch_array($query)) {
             		$id = $row['idmember']; ?>
 
             <tr>
-                <td><?php echo $row['idmember']; ?></td> 
-                <td><?php echo $row['mbname']; ?></td>
+                <td><?php echo $row['mbname']; echo ' '.$row['mbsurname']; ?></td>
                 <td><?php echo $row['mbsurname']; ?></td>
+                <td><?php echo $row['points']; ?></td>
             </tr>
 			<?php } ?>
 
