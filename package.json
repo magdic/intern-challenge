@@ -1,0 +1,22 @@
+{
+  "name": "intern-challenge",
+  "version": "1.0.0",
+  "description": "Intern Challenge for the Church",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/magdic/intern-challenge.git"
+  },
+  "author": "Magdiel Cordero",
+  "license": "Free",
+  "bugs": {
+    "url": "https://github.com/magdic/intern-challenge/issues"
+  },
+  "homepage": "https://github.com/magdic/intern-challenge",
+  "devDependencies": {
+    "grunt": "~0.4.2"
+  }
+}
