@@ -1,8 +1,28 @@
+<?php
+require_once('model/auth.php');
+include('model/dbconnect.php');
+//Array to store validation errors
+$errmsg_arr = array();
+if (!isset($_SESSION)) {
+session_start();
+
+}
 
 
-
-<?php require_once('model/auth.php'); ?>
-
+ 
+//Validacion de bandera de error
+$errflag = false;
+//Funcion para recibir valores del form. Previene SQL injection
+function clean($str)
+	{
+		$str = @trim($str);
+		if(get_magic_quotes_gpc())
+			{
+			$str = stripslashes($str);
+			}
+		return mysql_real_escape_string($str);
+	}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +34,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
 
-    <title>Welcome to the Intern Challenge</title>
+    <title>Add Member | Intern Challenge</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -60,7 +80,7 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Hello, world!</h1>
+        <h1>Add a new member!</h1>
         <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
         <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
       </div>
@@ -69,14 +89,22 @@
     <div class="container">
       
       <!-- Form -->
-      <form role="form">
+      <form role="form" action="model/addmember.php" method="post" enctype="multipart/form-data">
   <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+    <label for="exampleInputname">Name</label>
+    <input type="input" class="form-control" id="mbname" name="mbname" placeholder="Enter a name">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <label for="exampleInputsurname">Surname</label>
+    <input type="input" class="form-control" id="mbsurname" name="mbsurname" placeholder="Enter a Surname">
+  </div>    	    	
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="mbemail" name="mbemail" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Phone</label>
+    <input type="input" class="form-control" id="mbphone" name="mbphone" placeholder="Phone">
   </div>
   <button type="submit" class="btn btn-success">Submit</button>
 </form>

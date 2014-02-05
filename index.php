@@ -91,8 +91,9 @@
         <table class="table">
           <thead>
             <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Name</th>
+              <th>Assistance</th>
+              <th>Verses</th>
               <th>Points</th>
             </tr>
           </thead>
@@ -104,8 +105,9 @@
 
             <tr>
                 <td><?php echo $row['mbname']; echo ' '.$row['mbsurname']; ?></td>
-                <td><?php echo $row['mbsurname']; ?></td>
-                <td><?php echo $row['points']; ?></td>
+                <td><?php $asistance = $row['mbasistencia']; $asisresult = $asistance * 50; echo $asisresult; ?></td>
+                <td><?php $verses = $row['mbverses']; $veresult = $verses * 150; echo $veresult; ?></td>
+                <td><?php $points =  $row['points']; echo $asisresult + $veresult + $points; ?></td>
             </tr>
 			<?php } ?>
 
