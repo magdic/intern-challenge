@@ -27,8 +27,9 @@ $mbname = clean($_POST['mbname']);
 $mbsurname = clean($_POST['mbsurname']);
 $mbemail = clean($_POST['mbemail']);
 $mbphone = clean($_POST['mbphone']);
+$mbdate = clean($_POST['mbdate']);
 
-$resultf = mysql_query("SELECT * FROM member where mbname='$mbname' AND mbsurname='$mbsurname' AND mbemail='$mbemail' AND mbphone='$mbphone'");
+$resultf = mysql_query("SELECT * FROM member where mbname='$mbname' AND mbsurname='$mbsurname' AND mbemail='$mbemail' AND mbphone='$mbphone'AND mbdate='$mbdate'");
 while($rowf = mysql_fetch_array($resultf))
 	{
 	$cccvvv=$rowf['mbname'];
@@ -45,7 +46,7 @@ while($rowf = mysql_fetch_array($resultf))
 	}
 	}
 	}
-mysql_query("INSERT INTO member (mbname, mbsurname, mbemail, mbphone)
-VALUES ('$mbname','$mbsurname','$mbemail','$mbphone')");
+mysql_query("INSERT INTO member (mbname, mbsurname, mbemail, mbphone, mbdate)
+VALUES ('$mbname','$mbsurname','$mbemail','$mbphone','$mbdate')");
 header("location: ../app");
 ?>

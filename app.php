@@ -43,14 +43,25 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="./">Project name</a>
+          <a class="navbar-brand" href="app">Project name</a>
         </div>
         <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
+            <li class="active"><a href="app">Home</a></li>
             <li><a href="about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="add">Add</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="add"><span class="glyphicon glyphicon-plus"></span> Add new member</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Edit member</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Delete Member</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header"><span class="glyphicon glyphicon-stats"></span> See Results</li>
+                <li><a href="#"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Specific Member</a></li>
+              </ul>
+            </li>
           </ul>
 
         </div><!--/.navbar-collapse -->
