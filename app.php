@@ -1,7 +1,10 @@
 
 
 
-<?php require_once('model/auth.php'); ?>
+<?php 
+require_once('model/auth.php');
+include('model/dbconnect.php'); 
+?>
 
 
 <!DOCTYPE html>
@@ -54,7 +57,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="add"><span class="glyphicon glyphicon-plus"></span> Add new member</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Edit member</a></li>
+                <li><a href="edit"><span class="glyphicon glyphicon-pencil"></span> Edit member</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Delete Member</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header"><span class="glyphicon glyphicon-stats"></span> See Results</li>
