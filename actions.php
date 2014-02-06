@@ -1,10 +1,4 @@
-<?php 
-	//Start session
-	session_start();
-	
-	//Unset the variables stored in session
-	unset($_SESSION['SESS_MEMBER_ID']);
-?>
+
 <?php include 'model/dbconnect.php'; ?>
 
 
@@ -51,31 +45,26 @@
         </div>
         <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="app">Home</a></li>
             <li><a href="about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="add"><span class="glyphicon glyphicon-plus"></span> Add new member</a></li>
+                <li class="active"><a href="actions"><span class="glyphicon glyphicon-pencil"></span> Admin Actions</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header"><span class="glyphicon glyphicon-stats"></span> See Results</li>
+                <li><a href="results"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Specific Member</a></li>
+              </ul>
+            </li>
           </ul>
-          <form action="login.php" method="post" class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Username" name="username" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" name="password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
         </div><!--/.navbar-collapse -->
       </div>
     </div>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Welcome to this App!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
-      </div>
-    </div>
+   </br></br></br></br>
 
     <div class="container">
       <!-- Example row of columns -->
@@ -91,24 +80,23 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Assistance</th>
-              <th>Verses</th>
-              <th>Points</th>
+              <th>Options</th>
             </tr>
           </thead>
           <tbody>
            
-			<?php $query = mysql_query("SELECT * FROM member LEFT JOIN points ON member.idmember=points.idmember ORDER BY points DESC") or die(mysql_error());
-            	while ($row = mysql_fetch_array($query)) {
-            		$id = $row['idmember']; ?>
+      <?php $query = mysql_query("SELECT * FROM member ORDER BY idmember") or die(mysql_error());
+              while ($row = mysql_fetch_array($query)) {
+                $id = $row['idmember']; ?>
 
-            <tr>
+            <tr class="del<?php echo $id ?>">
                 <td><?php echo $row['mbname']; echo ' '.$row['mbsurname']; ?></td>
-                <td><?php $asistance = $row['mbasistencia']; $asisresult = $asistance * 50; echo $asisresult; ?></td>
-                <td><?php $verses = $row['mbverses']; $veresult = $verses * 150; echo $veresult; ?></td>
-                <td><?php $points =  $row['points']; echo $asisresult + $veresult + $points; ?></td>
+                <td>
+                  <a type="button" class="btn btn-danger" id="<?php echo $id; ?>">Delete</a>
+                  <a type="button" class="btn btn-warning" href="<?php echo 'edit?id='.$id?>">Edit</a>
+                </td>
             </tr>
-			<?php } ?>
+      <?php } ?>
 
           </tbody>
         </table>
@@ -122,6 +110,7 @@
         <p>&copy; Company 2013</p>
       </footer>
     </div> <!-- /container -->
+        
 
 
     <!-- Bootstrap core JavaScript
@@ -129,6 +118,55 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready( function() {
+
+  
+  
+            $('.btn-danger').click( function() {
+    
+                var id = $(this).attr("id");
+         
+                if(confirm("Are you sure you want to delete this Member?")){
+                    $.ajax({
+                        type: "POST",
+                        url: "model/deletemember.php",
+                        data: ({id: id}),
+                        cache: true,
+                        success: function(html){
+                            $(".del"+id).fadeOut('slow'); 
+                        } 
+                    }); 
+                }else{
+                    return true;}
+            });       
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready( function() {
+
+  
+  
+            $('.btn-warning').click( function() {
+    
+                var id = $(this).attr("id");
+         
+                if(confirm("You are going to Edit this member?")){
+                    $.ajax({
+                        type: "POST",
+                        url: "model/editmemberex.php",
+                        data: ({id: id}),
+                        cache: true,
+                        success: function(html){
+                            $(".del"+id).fadeOut('slow'); 
+                        } 
+                    }); 
+                }else{
+                    return true;}
+            });       
+        });
+    </script>
   </body>
 </html>
 

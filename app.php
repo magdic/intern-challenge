@@ -57,11 +57,10 @@ include('model/dbconnect.php');
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="add"><span class="glyphicon glyphicon-plus"></span> Add new member</a></li>
-                <li><a href="edit"><span class="glyphicon glyphicon-pencil"></span> Edit member</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Delete Member</a></li>
+                <li><a href="actions"><span class="glyphicon glyphicon-pencil"></span> Admin Actions</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header"><span class="glyphicon glyphicon-stats"></span> See Results</li>
-                <li><a href="#"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
+                <li><a href="results"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Specific Member</a></li>
               </ul>
             </li>

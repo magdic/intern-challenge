@@ -1,28 +1,22 @@
 <?php
-require_once('model/auth.php');
-include('model/dbconnect.php');
-//Array to store validation errors
-$errmsg_arr = array();
-if (!isset($_SESSION)) {
-session_start();
+include('model/dbconnect.php'); //Please make sure that the path is correct
+$id=$_GET['id'];
+$result = mysql_query("SELECT * FROM member where idmember='$id'");
 
+while($row = mysql_fetch_array($result))
+  {
+	$idmember=$row['idmember'];
+	$mbname=$row['mbname'];
+	$mbsurname=$row['mbsurname'];
+	$mbdate	=$row['mbdate'];
+	$mbemail =$row['mbemail'];
+	$mbphone=$row['mbphone'];
+	$mbasistencia=$row['mbasistencia'];
+	$mbverses=$row['mbverses'];
 }
 
-
- 
-//Validacion de bandera de error
-$errflag = false;
-//Funcion para recibir valores del form. Previene SQL injection
-function clean($str)
-	{
-		$str = @trim($str);
-		if(get_magic_quotes_gpc())
-			{
-			$str = stripslashes($str);
-			}
-		return mysql_real_escape_string($str);
-	}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,10 +28,11 @@ function clean($str)
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
 
-    <title>Add Member | Intern Challenge</title>
+    <title>Edit Member | Intern Challenge</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/datepicker.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
@@ -74,11 +69,10 @@ function clean($str)
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrator <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="add"><span class="glyphicon glyphicon-plus"></span> Add new member</a></li>
-                <li><a href="edit"><span class="glyphicon glyphicon-pencil"></span> Edit member</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Delete Member</a></li>
+                <li><a href="actions"><span class="glyphicon glyphicon-pencil"></span> Admin Actions</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header"><span class="glyphicon glyphicon-stats"></span> See Results</li>
-                <li><a href="#"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
+                <li><a href="results"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Specific Member</a></li>
               </ul>
             </li>
@@ -98,37 +92,47 @@ function clean($str)
     </div>
 
     <div class="container">
-
-  <div class="row">
-    <div class="col-xs-4">
-      <label for="searchbox">Search</label>
-      <input type="text" class="form-control" placeholder="Search a member">
-    </div>
-  </div>
       
       <!-- Form -->
-      <form role="form" action="model/addmember.php" method="post" enctype="multipart/form-data">
+      <form role="form" action="model/editmember.php" method="post" enctype="multipart/form-data">
+      	<input name="idmember" type="hidden" value="<?php echo $idmember?>" />
   <div class="form-group">
     <label for="exampleInputname">Name</label>
-    <input type="input" class="form-control" id="mbname" name="mbname" placeholder="Enter a name">
+    <input type="input" class="form-control" id="mbname" name="mbname" placeholder="<?php echo $mbname; ?>" readonly>
   </div>
   <div class="form-group">
     <label for="exampleInputsurname">Surname</label>
-    <input type="input" class="form-control" id="mbsurname" name="mbsurname" placeholder="Enter a Surname">
+    <input type="input" class="form-control" id="mbsurname" name="mbsurname" placeholder="<?php echo $mbsurname; ?>" readonly>
   </div>    	    	
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="mbemail" name="mbemail" placeholder="Enter email">
+    <input type="email" class="form-control" id="mbemail" name="mbemail" placeholder="<?php echo $mbemail; ?>" readonly>
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Phone</label>
-    <input type="input" class="form-control" id="mbphone" name="mbphone" placeholder="Phone">
+    <label for="exampleInputPhone">Phone</label>
+    <input type="input" class="form-control" id="mbphone" name="mbphone" placeholder="<?php echo $mbphone; ?>" >
   </div>
 
+  <div class="form-group">
+    <label for="exampleInputAsistenca">Atennance</label>
+    <input type="input" class="form-control" id="mbasistencia" name="mbasistencia" placeholder="<?php echo $mbasistencia; ?>" >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputVerses">Verses</label>
+    <input type="input" class="form-control" id="mbverses" name="mbverses" placeholder="<?php echo $mbverses; ?>" >
+  </div>
+
+<div class="form-group">
+    <label class="control-label">Birthday Date</label>
+    <div class="input-append date" id="dpYears" data-date="12-02-2012" data-date-format="mm/dd/yyyy" data-date-viewmode="years">
+        <input class="form-control" size="16" type="input" value="<?php echo $mbdate; ?>" id="mbdate" name="mbdate"readonly>
+        <span class="add-on"><i id="birth-icon" class="glyphicon glyphicon-calendar"></i></span>
+    </div>
+</div>
 
 
-
-  <button type="submit" class="btn btn-success">Edit</button>
+  <button type="submit" class="btn btn-success">Submit</button>
 </form>
 
 
@@ -146,6 +150,7 @@ function clean($str)
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap-datepicker.js"></script>
    
   </body>
 </html>

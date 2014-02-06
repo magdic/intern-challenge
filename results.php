@@ -1,28 +1,6 @@
-<?php
-require_once('model/auth.php');
-include('model/dbconnect.php');
-//Array to store validation errors
-$errmsg_arr = array();
-if (!isset($_SESSION)) {
-session_start();
 
-}
+<?php include 'model/dbconnect.php'; ?>
 
-
- 
-//Validacion de bandera de error
-$errflag = false;
-//Funcion para recibir valores del form. Previene SQL injection
-function clean($str)
-	{
-		$str = @trim($str);
-		if(get_magic_quotes_gpc())
-			{
-			$str = stripslashes($str);
-			}
-		return mysql_real_escape_string($str);
-	}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,11 +12,10 @@ function clean($str)
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
 
-    <title>Add Member | Intern Challenge</title>
+    <title>Intern Challenge</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="bower_components/bootstrap/dist/css/datepicker.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
@@ -64,7 +41,7 @@ function clean($str)
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="app">Project name</a>
+          <a class="navbar-brand" href="/intern-challenge">Intern Challenge</a>
         </div>
         <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -78,62 +55,58 @@ function clean($str)
                 <li><a href="actions"><span class="glyphicon glyphicon-pencil"></span> Admin Actions</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header"><span class="glyphicon glyphicon-stats"></span> See Results</li>
-                <li><a href="results"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
+                <li class="active"><a href="results"><span class="glyphicon glyphicon-th"></span> All Results</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> Specific Member</a></li>
               </ul>
             </li>
           </ul>
-
         </div><!--/.navbar-collapse -->
       </div>
     </div>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Add a new member!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
-      </div>
-    </div>
+   </br></br></br></br>
 
     <div class="container">
+      <!-- Example row of columns -->
+      <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Panel Resulsts</div>
+        <div class="panel-body">
+          <p>Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Assistance</th>
+              <th>Verses</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+			<?php $query = mysql_query("SELECT * FROM member LEFT JOIN points ON member.idmember=points.idmember ORDER BY points DESC") or die(mysql_error());
+            	while ($row = mysql_fetch_array($query)) {
+            		$id = $row['idmember']; ?>
+
+            <tr>
+                <td><?php echo $row['mbname']; echo ' '.$row['mbsurname']; ?></td>
+                <td><?php $asistance = $row['mbasistencia']; $asisresult = $asistance * 50; echo $asisresult; ?></td>
+                <td><?php $verses = $row['mbverses']; $veresult = $verses * 150; echo $veresult; ?></td>
+                <td><?php $points =  $row['points']; echo $asisresult + $veresult + $points; ?></td>
+            </tr>
+			<?php } ?>
+
+          </tbody>
+        </table>
+      </div>
       
-      <!-- Form -->
-      <form role="form" action="model/addmember.php" method="post" enctype="multipart/form-data">
-  <div class="form-group">
-    <label for="exampleInputname">Name</label>
-    <input type="input" class="form-control" id="mbname" name="mbname" placeholder="Enter a name">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputsurname">Surname</label>
-    <input type="input" class="form-control" id="mbsurname" name="mbsurname" placeholder="Enter a Surname">
-  </div>    	    	
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="mbemail" name="mbemail" placeholder="Enter email">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Phone</label>
-    <input type="input" class="form-control" id="mbphone" name="mbphone" placeholder="Phone">
-  </div>
-
-<div class="form-group">
-    <label class="control-label">Birthday Date</label>
-    <div class="input-append date" id="dpYears" data-date="12-02-2012" data-date-format="mm/dd/yyyy" data-date-viewmode="years">
-        <input class="form-control" size="16" type="input" value="Select a Birthday Date" id="mbdate" name="mbdate"readonly>
-        <span class="add-on"><i id="birth-icon" class="glyphicon glyphicon-calendar"></i></span>
-    </div>
-</div>
-
-
-  <button type="submit" class="btn btn-success">Submit</button>
-</form>
-
-
+      </div>
 
       <hr>
-
+    <div class="container">
       <footer>
         <p>&copy; Company 2013</p>
       </footer>
@@ -143,10 +116,10 @@ function clean($str)
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap-datepicker.js"></script>
-    <script src="bower_components/bootstrap/dist/js/datapickers.js"></script>
-    
   </body>
 </html>
+
+
+
